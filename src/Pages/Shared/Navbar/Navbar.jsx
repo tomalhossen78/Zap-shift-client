@@ -5,12 +5,12 @@ import Swal from "sweetalert2";
 import Container from "../../../Utility/Container";
 import { useEffect, useState } from "react";
 import Logo from "../../../Componets/Logo/Logo";
+import User from "../../../Componets/User/User";
 
 const Navbar = () => {
   //   const navigate = useNavigate();
   //   const { user, handleLogout } = use(AuthContext);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-
   useEffect(() => {
     const html = document.querySelector("html");
     html.setAttribute("data-theme", theme);
@@ -191,7 +191,10 @@ const Navbar = () => {
                 {" "}
                 <IoLogIn /> Login
               </Link>
+
+
             )} */}
+            <User />
           </div>
         </div>
       </Container>

@@ -8,7 +8,7 @@ const ReviewCard = ({ review }) => {
       </div>
       <p className="font-medium">{review.review}</p>
 
-      <div class="divider">
+      <div className="divider">
         ------------------------------------------------
       </div>
       <div className="flex justify-start items-center gap-2">

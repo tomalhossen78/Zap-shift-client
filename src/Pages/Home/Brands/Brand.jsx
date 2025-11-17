@@ -12,14 +12,17 @@ import brand7 from "../../../assets/brands/start_people.png";
 const Brand = () => {
   const brandsLogo = [brand1, brand3, brand4, brand5, brand6, brand7];
   return (
-    <div className="py-12">
+    <div className="py-12 space-y-12">
+      <h1 className="text-4xl font-extrabold text-center">
+        We've helped thousands of sales teams
+      </h1>
       <Swiper
         autoplay={{
           delay: 1000,
           disableOnInteraction: false,
         }}
         // loop={true}
-        slidesPerView={4}
+        slidesPerView={6}
         centeredSlides={true}
         spaceBetween={20}
         grabCursor={true}
