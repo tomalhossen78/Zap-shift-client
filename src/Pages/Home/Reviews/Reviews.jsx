@@ -7,7 +7,7 @@ import image from "../../../assets/customer-top.png";
 
 const Reviews = ({ reviewsPromise }) => {
   const reviews = use(reviewsPromise);
-  console.log(reviews);
+  // console.log(reviews);
   return (
     <Container className={"py-12 space-y-6"}>
       <div className="space-y-6">

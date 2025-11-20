@@ -2,15 +2,53 @@ import React from "react";
 import Container from "../../Utility/Container";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
+import { useLoaderData } from "react-router";
+
 const Sendparcel = () => {
-  const { user } = useAuth();
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm();
+
+  const { user } = useAuth();
+  const serviceCenters = useLoaderData();
+  const regionsDuplicate = serviceCenters.map((center) => center.region);
+  const regions = [...new Set(regionsDuplicate)];
+  // console.log(regions);
+
+  const senderRegion = watch("senderRegion");
+
+  const districtByRegion = (district) => {
+    const regionDistricts = serviceCenters.filter(
+      (service) => service.region === district
+    );
+    const disricts = regionDistricts.map((r) => r.district);
+    // console.log(disricts);
+    return disricts;
+  };
+
+  const receiverRegion = watch("receiverRegion");
+
   const handleSendParcel = (data) => {
     console.log("after login", data);
+    const isDocumet = data.parcelType === "document";
+    const isSameDistrict = data.picupWarhouse === data.receiverWarhouse;
+    // console.log(sameDistrict);
+    const parcelWeight = parseFloat(data.parcelWeight);
+    let cost = 0;
+    if (isDocumet) {
+      cost = isSameDistrict ? 60 : 80;
+    } else {
+      if (parcelWeight < 3) {
+        cost = isSameDistrict ? 110 : 150;
+      } else {
+        const extra = (parcelWeight - 3) * 40;
+        cost = isSameDistrict ? 110 + extra : 150 + extra + 40;
+      }
+    }
+    console.log(cost);
   };
   return (
     <Container className="my-20 p-4 min-h-screen bg-base-100">
@@ -34,7 +72,7 @@ const Sendparcel = () => {
               <div className="flex items-center justify-center gap-3">
                 <input
                   type="radio"
-                  {...register("parcel-type", { required: true })}
+                  {...register("parcelType", { required: true })}
                   className="radio radio-primary"
                   value="document"
                   defaultChecked
@@ -44,7 +82,7 @@ const Sendparcel = () => {
               <div className="flex items-center justify-center gap-3">
                 <input
                   type="radio"
-                  {...register("parcel-type", { required: true })}
+                  {...register("parcelType", { required: true })}
                   className="radio radio-primary"
                   value="not-document"
                 />
@@ -72,7 +110,7 @@ const Sendparcel = () => {
               {/* Parcel Weight (KG) */}
               <legend className="fieldset-legend">Parcel Weight (KG)</legend>
               <input
-                type="text"
+                type="number"
                 className="input w-full"
                 placeholder="Parcel Weight (KG)"
                 {...register("parcelWeight", { required: true })}
@@ -109,17 +147,19 @@ const Sendparcel = () => {
                     Sender Pickup Wire house
                   </legend>
                   <select
-                    className="select w-full"
                     defaultValue={""}
+                    className="select w-full"
                     {...register("picupWarhouse", { required: true })}
                   >
                     <option value={""} disabled>
                       Select Sender Wire house
                     </option>
-                    <option>Bangladesh</option>
-                    <option>India</option>
-                    <option>Pakistan</option>
-                    <option>Srilanka</option>
+                    {senderRegion &&
+                      districtByRegion(senderRegion).map((district, index) => (
+                        <option value={district} key={index}>
+                          {district}
+                        </option>
+                      ))}
                   </select>
                   {errors.picupWarhouse?.type === "required" && (
                     <p className="text-red-500 py-2">Wirehouse Required!</p>
@@ -156,16 +196,14 @@ const Sendparcel = () => {
                   <legend className="fieldset-legend">Your Region</legend>
                   <select
                     className="select w-full"
-                    defaultValue={""}
                     {...register("senderRegion", { required: true })}
                   >
                     <option value={""} disabled>
                       Select Your Region
                     </option>
-                    <option>Bangladesh</option>
-                    <option>India</option>
-                    <option>Pakistan</option>
-                    <option>Srilanka</option>
+                    {regions.map((region, index) => (
+                      <option key={index}>{region}</option>
+                    ))}
                   </select>
 
                   {errors.senderRegion?.type === "required" && (
@@ -219,17 +257,19 @@ const Sendparcel = () => {
                     Receiver Delivery Wire house
                   </legend>
                   <select
-                    className="select w-full"
                     defaultValue={""}
+                    className="select w-full"
                     {...register("receiverWarhouse", { required: true })}
                   >
                     <option value={""} disabled>
                       Select Receiver Wire house
                     </option>
-                    <option>Bangladesh</option>
-                    <option>India</option>
-                    <option>Pakistan</option>
-                    <option>Srilanka</option>
+                    {receiverRegion &&
+                      districtByRegion(receiverRegion).map((disrict, index) => (
+                        <option value={disrict} key={index}>
+                          {disrict}
+                        </option>
+                      ))}
                   </select>
                   {errors.receiverWarhouse?.type === "required" && (
                     <p className="text-red-500 py-2">
@@ -273,15 +313,13 @@ const Sendparcel = () => {
                   <select
                     className="select w-full"
                     {...register("receiverRegion", { required: true })}
-                    defaultValue={""}
                   >
                     <option value={""} disabled>
                       Select Your Region
                     </option>
-                    <option>Bangladesh</option>
-                    <option>India</option>
-                    <option>Pakistan</option>
-                    <option>Srilanka</option>
+                    {regions.map((region, index) => (
+                      <option key={index}>{region}</option>
+                    ))}
                   </select>
                   {errors.receiverRegion?.type === "required" && (
                     <p className="text-red-500 py-2">
