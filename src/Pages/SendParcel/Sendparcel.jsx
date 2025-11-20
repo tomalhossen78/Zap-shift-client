@@ -1,10 +1,23 @@
 import React from "react";
 import Container from "../../Utility/Container";
-
+import { useForm } from "react-hook-form";
+import useAuth from "../../hooks/useAuth";
 const Sendparcel = () => {
+  const { user } = useAuth();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const handleSendParcel = (data) => {
+    console.log("after login", data);
+  };
   return (
     <Container className="my-20 p-4 min-h-screen bg-base-100">
-      <form className="bg-base-200/30 py-12 px-16 rounded-2xl">
+      <form
+        onSubmit={handleSubmit(handleSendParcel)}
+        className="bg-base-200/30 py-12 px-16 rounded-2xl"
+      >
         <fieldset className="fieldset">
           <h1 className="font-extrabold text-5xl text-secondary">Add Parcel</h1>
 
@@ -17,27 +30,23 @@ const Sendparcel = () => {
           {/* radio */}
 
           <div>
-            {/* <legend className="fieldset-legend">Status</legend> */}
             <div className="flex gap-8 py-4">
               <div className="flex items-center justify-center gap-3">
                 <input
                   type="radio"
-                  name="status"
+                  {...register("parcel-type", { required: true })}
                   className="radio radio-primary"
-                  value="ongoing"
-                  //   checked={status === "ongoing"}
-                  //   onChange={handleChange}
+                  value="document"
+                  defaultChecked
                 />
                 <p className="font-semibold">Document</p>
               </div>
               <div className="flex items-center justify-center gap-3">
                 <input
                   type="radio"
-                  name="condition"
+                  {...register("parcel-type", { required: true })}
                   className="radio radio-primary"
-                  value="solved"
-                  //   checked={status === "solved"}
-                  //   onChange={handleChange}
+                  value="not-document"
                 />
                 <p className="font-semibold">Not-Document</p>
               </div>
@@ -50,11 +59,13 @@ const Sendparcel = () => {
               <legend className="fieldset-legend">Parcel Name</legend>
               <input
                 type="text"
-                name="parcel-name"
                 className="input w-full"
                 placeholder="Parcel Name"
-                required
+                {...register("parcelName", { required: true })}
               />
+              {errors.parcelName?.type === "required" && (
+                <p className="text-red-500 py-2">Parcel Name Required!</p>
+              )}
             </div>
 
             <div className="flex-1">
@@ -62,11 +73,13 @@ const Sendparcel = () => {
               <legend className="fieldset-legend">Parcel Weight (KG)</legend>
               <input
                 type="text"
-                name="parcel-name"
                 className="input w-full"
                 placeholder="Parcel Weight (KG)"
-                required
+                {...register("parcelWeight", { required: true })}
               />
+              {errors.parcelWeight?.type === "required" && (
+                <p className="text-red-500 py-2">Parcel Weight Required!</p>
+              )}
             </div>
           </div>
 
@@ -84,10 +97,10 @@ const Sendparcel = () => {
                   <legend className="fieldset-legend">Sender Name</legend>
                   <input
                     type="text"
-                    name="sender-name"
                     className="input w-full"
                     placeholder="Sender Name"
-                    required
+                    value={user?.displayName?.toUpperCase()}
+                    {...register("senderName", { required: true })}
                   />
                 </div>
                 {/* select warhouse */}
@@ -97,11 +110,10 @@ const Sendparcel = () => {
                   </legend>
                   <select
                     className="select w-full"
-
-                    //   value={cat}
-                    //   onChange={handleCatChange}
+                    defaultValue={""}
+                    {...register("picupWarhouse", { required: true })}
                   >
-                    <option selected disabled={true}>
+                    <option value={""} disabled>
                       Select Sender Wire house
                     </option>
                     <option>Bangladesh</option>
@@ -109,36 +121,45 @@ const Sendparcel = () => {
                     <option>Pakistan</option>
                     <option>Srilanka</option>
                   </select>
+                  {errors.picupWarhouse?.type === "required" && (
+                    <p className="text-red-500 py-2">Wirehouse Required!</p>
+                  )}
                 </div>
                 <div>
-                  <legend className="fieldset-legend">Address</legend>
+                  <legend className="fieldset-legend">Sender Address</legend>
                   <input
                     type="text"
-                    name="address"
                     className="input w-full"
-                    placeholder="Address"
-                    required
+                    placeholder="Sender Address"
+                    {...register("senderAddress", { required: true })}
                   />
+                  {errors.senderAddress?.type === "required" && (
+                    <p className="text-red-500 py-2">
+                      Sender Address Required!
+                    </p>
+                  )}
                 </div>
                 <div>
-                  <legend className="fieldset-legend">Sender Contact No</legend>
+                  <legend className="fieldset-legend">Sender Email</legend>
                   <input
-                    type="text"
-                    name="sender-number"
+                    type="email"
                     className="input w-full"
-                    placeholder="Sender Contact No"
-                    required
+                    placeholder="Sender Email"
+                    value={user?.email}
+                    {...register("senderEmail", { required: true })}
                   />
+                  {errors.senderEmail?.type === "required" && (
+                    <p className="text-red-500 py-2">Sender Email Required!</p>
+                  )}
                 </div>
                 <div className="col-span-2">
                   <legend className="fieldset-legend">Your Region</legend>
                   <select
                     className="select w-full"
-
-                    //   value={cat}
-                    //   onChange={handleCatChange}
+                    defaultValue={""}
+                    {...register("senderRegion", { required: true })}
                   >
-                    <option selected disabled={true}>
+                    <option value={""} disabled>
                       Select Your Region
                     </option>
                     <option>Bangladesh</option>
@@ -146,6 +167,10 @@ const Sendparcel = () => {
                     <option>Pakistan</option>
                     <option>Srilanka</option>
                   </select>
+
+                  {errors.senderRegion?.type === "required" && (
+                    <p className="text-red-500 py-2">Sender Region Required!</p>
+                  )}
                 </div>
 
                 <div className="col-span-2">
@@ -154,12 +179,15 @@ const Sendparcel = () => {
                   </legend>
                   <textarea
                     type="text"
-                    name="pickup-instruction"
                     className="input w-full"
                     placeholder="Pickup Instruction"
-                    required
-                    rows={4}
+                    {...register("pickupInstruction", { required: true })}
                   />
+                  {errors.pickupInstruction?.type === "required" && (
+                    <p className="text-red-500 py-2">
+                      Pickup Instruction Required!
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -176,11 +204,14 @@ const Sendparcel = () => {
                   <legend className="fieldset-legend">Receiver Name</legend>
                   <input
                     type="text"
-                    name="receiver-name"
                     className="input w-full"
                     placeholder="Receiver Name"
-                    required
+                    {...register("receiverName", { required: true })}
                   />
+
+                  {errors.receiverName?.type === "required" && (
+                    <p className="text-red-500 py-2">Receiver Name Required!</p>
+                  )}
                 </div>
                 {/* select warhouse */}
                 <div>
@@ -189,11 +220,10 @@ const Sendparcel = () => {
                   </legend>
                   <select
                     className="select w-full"
-
-                    //   value={cat}
-                    //   onChange={handleCatChange}
+                    defaultValue={""}
+                    {...register("receiverWarhouse", { required: true })}
                   >
-                    <option selected disabled={true}>
+                    <option value={""} disabled>
                       Select Receiver Wire house
                     </option>
                     <option>Bangladesh</option>
@@ -201,41 +231,51 @@ const Sendparcel = () => {
                     <option>Pakistan</option>
                     <option>Srilanka</option>
                   </select>
+                  {errors.receiverWarhouse?.type === "required" && (
+                    <p className="text-red-500 py-2">
+                      Receiver Wire house Required!
+                    </p>
+                  )}
                 </div>
                 {/* address */}
                 <div>
                   <legend className="fieldset-legend">Receiver Address</legend>
                   <input
                     type="text"
-                    name="receiver-address"
                     className="input w-full"
                     placeholder="Receiver Address"
-                    required
+                    {...register("receiverAddress", { required: true })}
                   />
+                  {errors.receiverAddress?.type === "required" && (
+                    <p className="text-red-500 py-2">
+                      Receiver Address Required!
+                    </p>
+                  )}
                 </div>
                 {/* contact */}
                 <div>
-                  <legend className="fieldset-legend">
-                    Receiver Contact No
-                  </legend>
+                  <legend className="fieldset-legend">Receiver Email</legend>
                   <input
-                    type="text"
-                    name="receiver-number"
+                    type="email"
                     className="input w-full"
-                    placeholder=" Receiver Contact No"
-                    required
+                    placeholder="Receiver Email"
+                    {...register("receiverEmail", { required: true })}
                   />
+                  {errors.receiverEmail?.type === "required" && (
+                    <p className="text-red-500 py-2">
+                      Receiver Email Required!
+                    </p>
+                  )}
                 </div>
                 {/* region */}
                 <div className="col-span-2">
                   <legend className="fieldset-legend">Receiver Region</legend>
                   <select
                     className="select w-full"
-
-                    //   value={cat}
-                    //   onChange={handleCatChange}
+                    {...register("receiverRegion", { required: true })}
+                    defaultValue={""}
                   >
-                    <option selected disabled={true}>
+                    <option value={""} disabled>
                       Select Your Region
                     </option>
                     <option>Bangladesh</option>
@@ -243,6 +283,11 @@ const Sendparcel = () => {
                     <option>Pakistan</option>
                     <option>Srilanka</option>
                   </select>
+                  {errors.receiverRegion?.type === "required" && (
+                    <p className="text-red-500 py-2">
+                      Receiver Region Required!
+                    </p>
+                  )}
                 </div>
                 {/* picup */}
                 <div className="col-span-2">
@@ -251,11 +296,15 @@ const Sendparcel = () => {
                   </legend>
                   <textarea
                     type="text"
-                    name="delivery-instruction"
                     className="input w-full"
                     placeholder="Delivery Instruction"
-                    required
+                    {...register("deliveryInstruction", { required: true })}
                   />
+                  {errors.deliveryInstruction?.type === "required" && (
+                    <p className="text-red-500 py-2">
+                      Delivery Instruction Required!
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
