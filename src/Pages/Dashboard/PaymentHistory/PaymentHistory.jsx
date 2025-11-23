@@ -17,9 +17,11 @@ const PaymentHistory = () => {
   });
   return (
     <Container>
-      <h2>All my Payments History : {payments.length}</h2>
+      <h1 className="px-6 pt-6 text-secondary text-3xl font-bold">
+        All my Payments History : {payments.length}
+      </h1>
 
-      <div className="overflow-x-auto w-full p-4 mt-20">
+      <div className="overflow-x-auto w-full p-4 mt-4">
         <table className="table w-full table-zebra">
           {/* head */}
           <thead className="bg-base-200">

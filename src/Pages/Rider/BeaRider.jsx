@@ -4,9 +4,10 @@ import riderImg from "../../../src/assets/agent-pending.png";
 import { useLoaderData, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
-import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 const BeaRider = () => {
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const {
     register,
@@ -25,11 +26,23 @@ const BeaRider = () => {
       (service) => service.region === district
     );
     const disricts = regionDistricts.map((r) => r.district);
-    // console.log(disricts);
     return disricts;
   };
   const handleAddRider = (data) => {
     console.log("after login", data);
+    axiosSecure.post("/riders", data).then((res) => {
+      if (res.data.insertedId) {
+        Swal.fire({
+          position: "top-right",
+          icon: "success",
+          title:
+            "Rider Application Added Succefully.We will confirm you  in 7 workings days.",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      }
+    });
   };
   return (
     <Container className="my-24 px-6 min-h-screen">
@@ -63,9 +76,9 @@ const BeaRider = () => {
                     type="text"
                     className="input w-full"
                     placeholder="Your Name"
-                    value={user?.displayName?.toUpperCase()}
+                    defaultValue={user?.displayName?.toUpperCase()}
                     {...register("name", { required: true })}
-                    readOnly
+                    // readOnly
                   />
                 </div>
                 {/* age */}

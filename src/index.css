@@ -36,11 +36,11 @@ body{
 .btn-outline{
  @apply btn btn-outline  rounded-3xl px-8 py-6 text-xl font-bold text-primary hover:bg-primary hover:text-secondary-content
 }
-.btn-sm{
+.btn-small{
   @apply btn btn-sm bg-primary text-secondary rounded-md shadow-md hover:bg-black transition-transform hover:scale-105 hover:text-base-100
 }
-.btn-sm-2{
-  @apply btn  px-12 btn-sm bg-primary text-secondary rounded-md shadow-md hover:bg-black transition-transform hover:scale-105 hover:text-base-100
+.btn-small-2{
+  @apply btn btn-sm hover:bg-primary
 }
 .btn-full{
   @apply btn w-full bg-primary text-secondary rounded-md shadow-md hover:bg-black transition-transform hover:scale-105 hover:text-base-100

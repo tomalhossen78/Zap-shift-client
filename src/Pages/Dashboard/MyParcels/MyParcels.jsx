@@ -64,9 +64,11 @@ const MyParcels = () => {
   };
   return (
     <Container>
-      <h2>All my parcels : {parcels.length}</h2>
+      <h1 className="px-6 pt-6 text-secondary text-3xl font-bold">
+        All my parcels : {parcels.length}
+      </h1>
 
-      <div className="overflow-x-auto w-full p-4 mt-20">
+      <div className="overflow-x-auto w-full p-4 mt-4">
         <table className="table w-full table-zebra">
           {/* head */}
           <thead className="bg-base-200">
@@ -103,7 +105,7 @@ const MyParcels = () => {
                     //   {" "}
                     <button
                       onClick={() => handlePayment(parcel)}
-                      className="btn bg-primary btn-sm"
+                      className="btn bg-primary btn-small"
                     >
                       Pay
                     </button>

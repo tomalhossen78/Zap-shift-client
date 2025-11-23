@@ -74,11 +74,11 @@ const User = () => {
       ) : (
         <div className="flex justify-between items-center gap-4">
           {" "}
-          <Link to={"/login"} className="btn-sm">
+          <Link to={"/login"} className="btn-small">
             {" "}
             <IoLogIn /> Login
           </Link>
-          <Link to="/beArider" className="btn-sm">
+          <Link to="/beArider" className="btn-small">
             {" "}
             <MdOutlineElectricBike /> Become a Rider
           </Link>

@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet } from "react-router";
 import { TbTruckDelivery } from "react-icons/tb";
 import Container from "../Utility/Container";
 import { FaRegCreditCard } from "react-icons/fa6";
+import { PiPersonSimpleBikeBold } from "react-icons/pi";
 const DashBoardLayout = () => {
   return (
     <Container>
@@ -99,6 +100,21 @@ const DashBoardLayout = () => {
                   <span className="is-drawer-close:hidden">
                     <NavLink to="/dashboard/payment-history">
                       Payment History
+                    </NavLink>
+                  </span>
+                </button>
+              </li>
+              {/* rider */}
+              <li>
+                <button
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Approve-Rider"
+                >
+                  {/* icon */}
+                  <PiPersonSimpleBikeBold />
+                  <span className="is-drawer-close:hidden">
+                    <NavLink to="/dashboard/approve-rider">
+                      Approve Rider
                     </NavLink>
                   </span>
                 </button>
