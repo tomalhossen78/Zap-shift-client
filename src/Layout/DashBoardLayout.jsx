@@ -2,6 +2,7 @@ import React from "react";
 import { Link, NavLink, Outlet } from "react-router";
 import { TbTruckDelivery } from "react-icons/tb";
 import Container from "../Utility/Container";
+import { FaRegCreditCard } from "react-icons/fa6";
 const DashBoardLayout = () => {
   return (
     <Container>
@@ -80,7 +81,7 @@ const DashBoardLayout = () => {
                   className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                   data-tip="My parcels"
                 >
-                  {/* Settings icon */}
+                  {/* icon */}
                   <TbTruckDelivery />
                   <span className="is-drawer-close:hidden">
                     <NavLink to="/dashboard/my-parcels">My Parcels</NavLink>
@@ -88,29 +89,18 @@ const DashBoardLayout = () => {
                 </button>
               </li>
 
-              {/* List item */}
               <li>
                 <button
                   className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="Settings"
+                  data-tip="Payment History"
                 >
-                  {/* Settings icon */}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    strokeLinejoin="round"
-                    strokeLinecap="round"
-                    strokeWidth="2"
-                    fill="none"
-                    stroke="currentColor"
-                    className="my-1.5 inline-block size-4"
-                  >
-                    <path d="M20 7h-9"></path>
-                    <path d="M14 17H5"></path>
-                    <circle cx="17" cy="17" r="3"></circle>
-                    <circle cx="7" cy="7" r="3"></circle>
-                  </svg>
-                  <span className="is-drawer-close:hidden">Settings</span>
+                  {/* icon */}
+                  <FaRegCreditCard />
+                  <span className="is-drawer-close:hidden">
+                    <NavLink to="/dashboard/payment-history">
+                      Payment History
+                    </NavLink>
+                  </span>
                 </button>
               </li>
             </ul>
