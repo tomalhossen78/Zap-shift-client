@@ -2,11 +2,12 @@ import React from "react";
 import Container from "../../Utility/Container";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Sendparcel = () => {
+  const naviage = useNavigate();
   const {
     register,
     handleSubmit,
@@ -69,14 +70,23 @@ const Sendparcel = () => {
         axiosSecure
           .post("/parcels", data)
           .then((res) => {
-            console.log("after saving parcels", res.data);
-            Swal.fire({
-              title: "Send!",
-              text: "Your Parcel has been send.",
-              icon: "success",
-            });
+            // console.log("after saving parcels", res.data);
+            if (res.data.insertedId) {
+              Swal.fire({
+                title: "Send!",
+                text: "Your Parcel has been send.",
+                icon: "success",
+              });
+              naviage("/dashboard/my-parcels");
+            }
           })
-          .catch();
+          .catch((error) => {
+            Swal.fire({
+              title: "Error happends here!",
+              text: error,
+              icon: "error",
+            });
+          });
       }
     });
   };
