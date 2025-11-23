@@ -53,6 +53,7 @@ const Sendparcel = () => {
       }
     }
     console.log(cost);
+    data.cost = cost;
     Swal.fire({
       title: "Are you Agree cost?",
       text: `you will be charged ${cost}`,

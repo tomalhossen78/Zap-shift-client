@@ -1,9 +1,10 @@
 import React from "react";
-import { Link, Outlet } from "react-router";
-
+import { Link, NavLink, Outlet } from "react-router";
+import { TbTruckDelivery } from "react-icons/tb";
+import Container from "../Utility/Container";
 const DashBoardLayout = () => {
   return (
-    <div>
+    <Container>
       <div className="drawer lg:drawer-open">
         <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
@@ -49,7 +50,7 @@ const DashBoardLayout = () => {
             <ul className="menu w-full grow">
               {/* List item */}
               <li>
-                <Link
+                <NavLink
                   to="/"
                   className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                   data-tip="Homepage"
@@ -69,7 +70,22 @@ const DashBoardLayout = () => {
                     <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                   </svg>
                   <span className="is-drawer-close:hidden">Homepage</span>
-                </Link>
+                </NavLink>
+              </li>
+
+              {/* our dahboard links */}
+
+              <li>
+                <button
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="My parcels"
+                >
+                  {/* Settings icon */}
+                  <TbTruckDelivery />
+                  <span className="is-drawer-close:hidden">
+                    <NavLink to="/dashboard/my-parcels">My Parcels</NavLink>
+                  </span>
+                </button>
               </li>
 
               {/* List item */}
@@ -101,7 +117,7 @@ const DashBoardLayout = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 
