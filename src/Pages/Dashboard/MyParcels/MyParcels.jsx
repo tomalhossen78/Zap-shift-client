@@ -105,7 +105,7 @@ const MyParcels = () => {
                     //   {" "}
                     <button
                       onClick={() => handlePayment(parcel)}
-                      className="btn bg-primary btn-small"
+                      className="btn bg-primary btn-sm"
                     >
                       Pay
                     </button>

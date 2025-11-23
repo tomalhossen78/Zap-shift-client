@@ -40,7 +40,7 @@ const BeaRider = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate("/");
+        navigate("/dashboard/approve-rider");
       }
     });
   };
