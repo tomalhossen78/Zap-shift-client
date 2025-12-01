@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { FaUserShield } from "react-icons/fa";
 import { FiShieldOff } from "react-icons/fi";
@@ -7,10 +7,11 @@ import Swal from "sweetalert2";
 
 const UsersMangemet = () => {
   const axiosSecure = useAxiosSecure();
+  const [search, setSearch] = useState("");
   const { refetch, data: users = [] } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["users", search],
     queryFn: async () => {
-      const res = await axiosSecure.get("/users");
+      const res = await axiosSecure.get(`/users?search=${search}`);
       return res.data;
     },
   });
@@ -61,8 +62,35 @@ const UsersMangemet = () => {
     handleUser(user, "user", "Admin has been removed Succesfully", "warning");
   };
   return (
-    <div>
-      <h1>Mange Users : {users.length}</h1>
+    <div className="p-6">
+      <div className="flex justify-between mb-4">
+        <h1>Mange Users : {users.length}</h1>
+        <p>Search text is : {search}</p>
+        <label class="input">
+          <svg
+            class="h-[1em] opacity-50"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+          >
+            <g
+              stroke-linejoin="round"
+              stroke-linecap="round"
+              stroke-width="2.5"
+              fill="none"
+              stroke="currentColor"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.3-4.3"></path>
+            </g>
+          </svg>
+          <input
+            type="search"
+            class="grow"
+            placeholder="Search"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </label>
+      </div>
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
