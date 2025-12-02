@@ -18,6 +18,7 @@ const AssignedDeliveries = () => {
   });
 
   const handleDeliveryStatusUpadate = (parcel, status) => {
+    // console.log(parcel);
     const statusInfo = {
       deliveryStatus: status,
       riderId: parcel.riderId,
@@ -59,6 +60,7 @@ const AssignedDeliveries = () => {
               <tr key={parcel._id}>
                 <th>{index + 1}</th>
                 <td>{parcel.parcelName}</td>
+                <td>{parcel.trackingId}</td>
                 <td className="flex gap-2">
                   {parcel.deliveryStatus === "driver-assigned" ? (
                     <>

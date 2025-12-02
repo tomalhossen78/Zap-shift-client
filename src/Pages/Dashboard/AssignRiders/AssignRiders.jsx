@@ -31,7 +31,7 @@ const AssignRiders = () => {
 
   const openRiderModal = (parcel) => {
     modelRef.current.showModal();
-    console.log(parcel.picupWarhouse);
+    // console.log(parcel.picupWarhouse);
     setSelectedParcel(parcel);
   };
 
