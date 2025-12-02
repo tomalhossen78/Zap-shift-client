@@ -22,7 +22,7 @@ const Navbar = () => {
   };
 
   const links = (
-    <div className="flex justify-center items-center gap-8">
+    <>
       <li className="text-secondary font-medium">
         <NavLink to="/">Home</NavLink>
       </li>
@@ -87,7 +87,7 @@ const Navbar = () => {
           </svg>
         </label>
       </li>
-    </div>
+    </>
   );
   return (
     <div className="bg-base-100 shadow-md fixed w-full top-0 z-20 md:px-0 px-4">

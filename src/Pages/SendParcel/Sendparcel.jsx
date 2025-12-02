@@ -57,7 +57,7 @@ const Sendparcel = () => {
     data.cost = cost;
     Swal.fire({
       title: "Are you Agree cost?",
-      text: `you will be charged ${cost}`,
+      text: `you will be charged ${cost} tk`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -392,7 +392,7 @@ const Sendparcel = () => {
           {/* button */}
 
           <div className="py-4">
-            <button type="submit" className="btn-sm-2">
+            <button type="submit" className="btn-small">
               Proceed to Confirm Booking
             </button>
           </div>
